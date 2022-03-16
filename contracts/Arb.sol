@@ -77,9 +77,9 @@ contract Arb is Ownable {
     uint token1InitialBalance = IERC20(_token1).balanceOf(address(this));
     uint token2InitialBalance = IERC20(_token2).balanceOf(address(this));
     swap(_router0,_token0, _token1,_amount);
-    uint tradeableAmount1 = IERC20(_token1).balanceOf(address(this)); - token1InitialBalance;
+    uint tradeableAmount1 = IERC20(_token1).balanceOf(address(this)) - token1InitialBalance;
     swap(_router1,_token1, _token2,tradeableAmount1);
-    uint tradeableAmount2 = IERC20(_token2).balanceOf(address(this)); - token2InitialBalance;
+    uint tradeableAmount2 = IERC20(_token2).balanceOf(address(this)) - token2InitialBalance;
     swap(_router2,_token2, _token0,tradeableAmount2);
     require(IERC20(_token0).balanceOf(address(this)) > startBalance, "Trade Reverted, No Profit Made");
   }
