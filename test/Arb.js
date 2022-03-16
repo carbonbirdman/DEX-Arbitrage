@@ -1,5 +1,5 @@
 const { expect } = require("chai");
-const kconfig = require("config/kestrel_config.js");
+const kconfig = require("../config/kestrel_config.js");
 
 describe("Arb contract", function () {
 
