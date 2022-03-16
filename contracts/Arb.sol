@@ -73,18 +73,15 @@ contract Arb is Ownable {
 	}
 
   function triDexTrade(address _router0, address _router1, address _router2, address _token0, address _token1, address _token2, uint256 _amount) external onlyOwner {
-    uint startBalance = IERC20(_token0).balanceOf(address(this));
+    uint startBalance = IERC20(_token2).balanceOf(address(this));
     uint token1InitialBalance = IERC20(_token1).balanceOf(address(this));
     uint token2InitialBalance = IERC20(_token2).balanceOf(address(this));
     swap(_router0,_token0, _token1,_amount);
-    uint token1Balance = IERC20(_token1).balanceOf(address(this));
-    uint tradeableAmount1 = token1Balance - token1InitialBalance;
+    uint tradeableAmount1 = IERC20(_token1).balanceOf(address(this)); - token1InitialBalance;
     swap(_router1,_token1, _token2,tradeableAmount1);
-    uint token2Balance = IERC20(_token2).balanceOf(address(this));
-    uint tradeableAmount2 = token2Balance - token2InitialBalance;
+    uint tradeableAmount2 = IERC20(_token2).balanceOf(address(this)); - token2InitialBalance;
     swap(_router2,_token2, _token0,tradeableAmount2);
-    uint endBalance = IERC20(_token2).balanceOf(address(this));
-    require(endBalance > startBalance, "Trade Reverted, No Profit Made");
+    require(IERC20(_token0).balanceOf(address(this)) > startBalance;, "Trade Reverted, No Profit Made");
   }
 
 	function getBalance (address _tokenContractAddress) external view  returns (uint256) {
