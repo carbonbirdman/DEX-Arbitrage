@@ -10,10 +10,10 @@ if (network === 'fantom') config = require('./../config/fantom.json');
 const main = async () => {
   [owner] = await ethers.getSigners();
   console.log(`Owner: ${owner.address}`);
-  const IArb = await ethers.getContractFactory('InstaArb');
-  arb = await IArb.attach(config.arbContract);
-	const res = await arb.stables(0);
-	console.log(res);
+  const Arb = await ethers.getContractFactory('Arb');
+  arb = await Arb.deploy();
+	//const res = await arb.stables(0);
+	//console.log(res);
 	
 }
 
