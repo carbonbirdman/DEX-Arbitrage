@@ -6,6 +6,13 @@ require("dotenv").config();
  */
 module.exports = {
   networks: {
+    hardhat: {
+      chainId: 1337,
+      forking: {
+        url: "https://apis.ankr.com/300a0d7f15fc4a01b79ff1bd778088d7/45614406b1e8e84a919cc03be771db24/fantom/full/main",
+        chainId:1337,
+      }
+    }
     aurora: {
       url: `https://mainnet.aurora.dev`,
       accounts: [process.env.privateKey],
