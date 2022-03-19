@@ -6,11 +6,28 @@ let config,arb,owner;
 const network = hre.network.name;
 if (network === 'aurora') config = require('./../config/aurora.json');
 if (network === 'fantom') config = require('./../config/fantom.json');
+if (network === 'hardhat') config = require('./../config/hardhat.json');
 
 const main = async () => {
   [owner] = await ethers.getSigners();
   console.log(`Owner: ${owner.address}`);
-	
+  const asset = config.baseAssets[0];
+  const interface = await ethers.getContractFactory('WETH9');
+  const tokenAsset = await interface.attach(asset.address);
+  const ownerBalance = await tokenAsset.balanceOf(owner.address);
+   console.log(`${asset.sym} Owner Balance: `,ownerBalance.toString());
+
+  const provider = new ethers.providers.Web3Provider(hre.network.provider);
+   //console.log(provider);
+   //let provider = ethers.getDefaultProvider();
+    const balance = await provider.getBalance(owner.address);
+    console.log(owner.address + ':' + ethers.utils.formatEther(balance));
+
+  const IArb = await ethers.getContractFactory('Arb');
+  arb = await IArb.attach(config.arbContract);
+ //   console.log(arb);
+		const arbBalance = await arb.getBalance(asset.address);
+		console.log(`${asset.sym} Arb Balance: `,arbBalance.toString());
 }
 
 process.on('uncaughtException', function(err) {

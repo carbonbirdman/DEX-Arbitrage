@@ -12,7 +12,7 @@ describe("Arb contract", function () {
   beforeEach(async function(){
     [owner, addr1, addr2] = await ethers.getSigners();
     Arb = await ethers.getContractFactory("Arb");
-    const hardhatArb = await Arb.deploy();
+    hardhatArb = await Arb.deploy();
   });
 
   describe("Deployment", function(){
@@ -28,10 +28,12 @@ describe("Arb contract", function () {
       it("Should get the expected output for a swap", async function(){
            const token0_address = kconfig.token_address["FTM"];
            const token1_address = kconfig.token_address["LQDR"];
-           const input_amount = ethers.utils.parseUnits(1, 18);
+           const router_address = kconfig.router_address["spooky"];
+           const input_amount = ethers.utils.parseUnits("1", 18);
 
         amount_out = await hardhatArb.getAmountOutMin(router_address, token0_address, token1_address, input_amount);
-        expect(amount_out).to.toBeGreaterThan(ethers.utils.parseUnits(0.05, 18));
+        min_amount = ethers.utils.parseUnits("0.05", 18).toFixed();
+        expect(amount_out).to.be.at.least(min_amount);
 
       });//it
 
@@ -55,6 +57,7 @@ describe("Arb contract", function () {
     //expect(await hardhatARb.totalSupply()).to.equal(ownerBalance);
  // });
 //});
+
 
 
 

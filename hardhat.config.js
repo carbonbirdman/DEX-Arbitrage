@@ -6,6 +6,13 @@ require("dotenv").config();
  */
 module.exports = {
   networks: {
+    hardhat: {
+      chainId: 1337,
+      forking: {
+        url:"https://rpc.ftm.tools",
+        chainId:1337,
+      }
+    },
     aurora: {
       url: `https://mainnet.aurora.dev`,
       accounts: [process.env.privateKey],
